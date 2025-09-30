@@ -1,0 +1,14 @@
+/mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/deps/serde-8babf3d2038e3a6d.d: /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/build/serde-0382af6524cada1a/out/private.rs
+
+/mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/deps/libserde-8babf3d2038e3a6d.rlib: /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/build/serde-0382af6524cada1a/out/private.rs
+
+/mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/deps/libserde-8babf3d2038e3a6d.rmeta: /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/build/serde-0382af6524cada1a/out/private.rs
+
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs:
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs:
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs:
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs:
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs:
+/mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/build/serde-0382af6524cada1a/out/private.rs:
+
+# env-dep:OUT_DIR=/mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/build/serde-0382af6524cada1a/out

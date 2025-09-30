@@ -1,0 +1,1 @@
+C:\Users\RMT\Documents\vscodium\crypto-Exchange-Rust-Base\RX-DEX\rx-dex\target\debug\api-gateway.exe: C:\Users\RMT\Documents\vscodium\crypto-Exchange-Rust-Base\RX-DEX\rx-dex\services\api-gateway\src\main.rs

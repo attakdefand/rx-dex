@@ -1,0 +1,157 @@
+version: '3.8'
+
+services:
+  # Message Queue
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  # Database
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # API Gateway
+  api-gateway:
+    build: 
+      context: .
+      dockerfile: services/api-gateway/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - QUOTER_URL=http://quoter:8081
+      - USER_SERVICE_URL=http://user-service:8084
+      - ORDER_SERVICE_URL=http://order-service:8083
+      - ADMIN_SERVICE_URL=http://admin-service:8088
+      - TRADING_SERVICE_URL=http://trading-service:8089
+    depends_on:
+      - quoter
+      - user-service
+      - order-service
+      - admin-service
+      - trading-service
+    restart: unless-stopped
+
+  # Services
+  quoter:
+    build:
+      context: .
+      dockerfile: services/quoter/Dockerfile
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+
+  order-service:
+    build:
+      context: .
+      dockerfile: services/order-service/Dockerfile
+    ports:
+      - "8083:8083"
+    environment:
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  user-service:
+    build:
+      context: .
+      dockerfile: services/user-service/Dockerfile
+    ports:
+      - "8084:8084"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+
+  matching-engine:
+    build:
+      context: .
+      dockerfile: services/matching-engine/Dockerfile
+    ports:
+      - "8085:8085"
+    environment:
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  wallet-service:
+    build:
+      context: .
+      dockerfile: services/wallet-service/Dockerfile
+    ports:
+      - "8086:8086"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+
+  notification-service:
+    build:
+      context: .
+      dockerfile: services/notification-service/Dockerfile
+    ports:
+      - "8087:8087"
+    environment:
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  admin-service:
+    build:
+      context: ./services/admin-service
+      dockerfile: Dockerfile
+    ports:
+      - "8088:8088"
+    restart: unless-stopped
+
+  trading-service:
+    build:
+      context: ./services/trading-service
+      dockerfile: Dockerfile
+    ports:
+      - "8089:8089"
+    restart: unless-stopped
+
+  indexer:
+    build:
+      context: ./services/indexer
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8082"
+    restart: unless-stopped
+
+  # Web Frontend
+  web:
+    build:
+      context: ./clients/web
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - api-gateway
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+  postgres_data:

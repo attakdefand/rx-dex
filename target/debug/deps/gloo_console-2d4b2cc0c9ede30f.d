@@ -1,0 +1,10 @@
+C:\Users\RMT\Documents\vscodium\crypto-Exchange-Rust-Base\RX-DEX\rx-dex\target\debug\deps\gloo_console-2d4b2cc0c9ede30f.d: C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\lib.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\console_dbg.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\counter.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\externs.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\macros.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\timer.rs
+
+C:\Users\RMT\Documents\vscodium\crypto-Exchange-Rust-Base\RX-DEX\rx-dex\target\debug\deps\libgloo_console-2d4b2cc0c9ede30f.rmeta: C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\lib.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\console_dbg.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\counter.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\externs.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\macros.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\timer.rs
+
+C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\lib.rs:
+C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\console_dbg.rs:
+C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\counter.rs:
+C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\externs.rs:
+C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\macros.rs:
+C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-console-0.3.0\src\timer.rs:

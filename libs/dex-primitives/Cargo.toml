@@ -1,0 +1,13 @@
+[package]
+name = "dex-primitives"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+schemars = "0.8"
+cosmwasm-std = "1"   # core types for msgs/coins (works even off-chain as a type crate)
+thiserror = "1"
+
+# ✅ Force alloc so cosmwasm-crypto can use ed25519_zebra::batch
+ed25519-zebra = "3.0"

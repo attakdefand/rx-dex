@@ -1,0 +1,191 @@
+use cosmwasm_std::{
+    entry_point, to_json_binary, BankMsg, Binary, Coin, Deps, DepsMut, Env, MessageInfo, Response,
+    StdError, StdResult, Uint128,
+};
+use cw2::set_contract_version;
+use cw_storage_plus::Item;
+
+// ---- Contract metadata ----
+const CONTRACT_NAME: &str = "cw-amm-cpmm";
+const CONTRACT_VERSION: &str = "0.1.0";
+
+// ---- State ----
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+pub struct Pool {
+    pub token_x: String, // denom or cw20 address (simplified for now)
+    pub token_y: String,
+    pub fee_bps: u16, // 30 = 0.30%
+    pub x_reserve: Uint128,
+    pub y_reserve: Uint128,
+}
+
+const POOL: Item<Pool> = Item::new("pool");
+
+// ---- Messages ----
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+pub struct InstantiateMsg {
+    pub token_x: String,
+    pub token_y: String,
+    pub fee_bps: u16,
+}
+
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(rename_all = "snake_case")]
+pub enum ExecuteMsg {
+    ProvideLiquidity { x: Uint128, y: Uint128 },
+    SwapXForY { dx: Uint128, min_dy: Uint128 },
+    SwapYForX { dy: Uint128, min_dx: Uint128 },
+}
+
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+#[serde(rename_all = "snake_case")]
+pub enum QueryMsg {
+    Pool {},
+}
+
+// ---- Instantiate ----
+#[entry_point]
+pub fn instantiate(
+    deps: DepsMut,
+    _env: Env,
+    _info: MessageInfo,
+    msg: InstantiateMsg,
+) -> StdResult<Response> {
+    set_contract_version(deps.storage, CONTRACT_NAME, CONTRACT_VERSION)?;
+    let pool = Pool {
+        token_x: msg.token_x,
+        token_y: msg.token_y,
+        fee_bps: msg.fee_bps,
+        x_reserve: Uint128::zero(),
+        y_reserve: Uint128::zero(),
+    };
+    POOL.save(deps.storage, &pool)?;
+    Ok(Response::new().add_attribute("method", "instantiate"))
+}
+
+// ---- Execute ----
+#[entry_point]
+pub fn execute(
+    deps: DepsMut,
+    _env: Env,
+    info: MessageInfo,
+    msg: ExecuteMsg,
+) -> StdResult<Response> {
+    match msg {
+        ExecuteMsg::ProvideLiquidity { x, y } => {
+            let mut pool = POOL.load(deps.storage)?;
+            // naive native-coin funding; production will use CW20 hooks etc.
+            let rx = info
+                .funds
+                .iter()
+                .find(|c| c.denom == pool.token_x)
+                .map(|c| c.amount)
+                .unwrap_or_default();
+            let ry = info
+                .funds
+                .iter()
+                .find(|c| c.denom == pool.token_y)
+                .map(|c| c.amount)
+                .unwrap_or_default();
+
+            if rx < x || ry < y {
+                return Err(StdError::generic_err("insufficient funds sent"));
+            }
+
+            pool.x_reserve += x;
+            pool.y_reserve += y;
+            POOL.save(deps.storage, &pool)?;
+            Ok(Response::new().add_attribute("provide", format!("{x}/{y}")))
+        }
+        ExecuteMsg::SwapXForY { dx, min_dy } => {
+            let mut pool = POOL.load(deps.storage)?;
+            use rust_decimal::prelude::ToPrimitive;
+            use rust_decimal::Decimal;
+
+            let x = Decimal::from(pool.x_reserve.u128());
+            let y = Decimal::from(pool.y_reserve.u128());
+            let dx_dec = Decimal::from(dx.u128());
+
+            let dy_dec = dex_math::cpmm_out_given_in(x, y, dx_dec, pool.fee_bps as i64)
+                .map_err(|e| StdError::generic_err(e.to_string()))?;
+            let dy_u128 = dy_dec
+                .to_u128()
+                .ok_or_else(|| StdError::generic_err("overflow"))?;
+            let dy = Uint128::from(dy_u128);
+
+            if dy < min_dy {
+                return Err(StdError::generic_err("slippage"));
+            }
+
+            pool.x_reserve += dx;
+            pool.y_reserve = pool
+                .y_reserve
+                .checked_sub(dy)
+                .map_err(|_| StdError::generic_err("underflow"))?;
+            POOL.save(deps.storage, &pool)?;
+
+            let send = BankMsg::Send {
+                to_address: info.sender.to_string(),
+                amount: vec![Coin {
+                    denom: pool.token_y.clone(),
+                    amount: dy,
+                }],
+            };
+
+            Ok(Response::new()
+                .add_message(send)
+                .add_attribute("swap_x_for_y", dy.to_string()))
+        }
+        ExecuteMsg::SwapYForX { dy, min_dx } => {
+            let mut pool = POOL.load(deps.storage)?;
+            use rust_decimal::prelude::ToPrimitive;
+            use rust_decimal::Decimal;
+
+            let x = Decimal::from(pool.x_reserve.u128());
+            let y = Decimal::from(pool.y_reserve.u128());
+            let dy_dec = Decimal::from(dy.u128());
+
+            // Invert reserves to reuse "out_given_in"
+            let dx_dec = dex_math::cpmm_out_given_in(y, x, dy_dec, pool.fee_bps as i64)
+                .map_err(|e| StdError::generic_err(e.to_string()))?;
+            let dx_u128 = dx_dec
+                .to_u128()
+                .ok_or_else(|| StdError::generic_err("overflow"))?;
+            let dx = Uint128::from(dx_u128);
+
+            if dx < min_dx {
+                return Err(StdError::generic_err("slippage"));
+            }
+
+            pool.y_reserve += dy;
+            pool.x_reserve = pool
+                .x_reserve
+                .checked_sub(dx)
+                .map_err(|_| StdError::generic_err("underflow"))?;
+            POOL.save(deps.storage, &pool)?;
+
+            let send = BankMsg::Send {
+                to_address: info.sender.to_string(),
+                amount: vec![Coin {
+                    denom: pool.token_x.clone(),
+                    amount: dx,
+                }],
+            };
+
+            Ok(Response::new()
+                .add_message(send)
+                .add_attribute("swap_y_for_x", dx.to_string()))
+        }
+    }
+}
+
+// ---- Query ----
+#[entry_point]
+pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
+    match msg {
+        QueryMsg::Pool {} => {
+            let pool = POOL.load(deps.storage)?;
+            to_json_binary(&pool)
+        }
+    }
+}

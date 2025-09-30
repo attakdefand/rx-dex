@@ -1,0 +1,15 @@
+[package]
+name = "matching-engine"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.7"
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+dex-math = { path = "../../libs/dex-math" }
+dex-messaging = { path = "../../libs/dex-messaging" }
+dex-primitives = { path = "../../libs/dex-primitives" }
+uuid = { version = "1", features = ["v4"] }
+chrono = { version = "0.4", features = ["serde"] }

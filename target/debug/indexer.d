@@ -1,0 +1,1 @@
+/mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/indexer: /mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/services/indexer/src/main.rs

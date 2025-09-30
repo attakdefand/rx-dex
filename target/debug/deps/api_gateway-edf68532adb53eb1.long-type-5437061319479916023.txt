@@ -1,0 +1,4 @@
+RateLimit<Cors<Route>>
+RateLimit<Cors<Route>>: Clone
+Trace<RateLimit<Cors<Route>>, SharedClassifier<ServerErrorsAsFailures>>: Clone
+Trace<RateLimit<Cors<Route>>, SharedClassifier<ServerErrorsAsFailures>>

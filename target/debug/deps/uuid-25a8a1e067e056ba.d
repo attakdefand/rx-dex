@@ -1,0 +1,13 @@
+C:\Users\RMT\Documents\vscodium\crypto-Exchange-Rust-Base\RX-DEX\rx-dex\target\debug\deps\uuid-25a8a1e067e056ba.d: C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\lib.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\macros.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\builder.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\error.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\non_nil.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\parser.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\fmt.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\timestamp.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\external.rs
+
+C:\Users\RMT\Documents\vscodium\crypto-Exchange-Rust-Base\RX-DEX\rx-dex\target\debug\deps\libuuid-25a8a1e067e056ba.rmeta: C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\lib.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\macros.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\builder.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\error.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\non_nil.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\parser.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\fmt.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\timestamp.rs C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\external.rs
+
+C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\lib.rs:
+C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\macros.rs:
+C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\builder.rs:
+C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\error.rs:
+C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\non_nil.rs:
+C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\parser.rs:
+C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\fmt.rs:
+C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\timestamp.rs:
+C:\Users\RMT\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\uuid-1.18.1\src\external.rs:

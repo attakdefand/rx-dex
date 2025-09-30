@@ -1,0 +1,106 @@
+# Ignore version control directories
+.git/
+.gitignore
+
+# Ignore IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Ignore logs
+*.log
+logs/
+log/
+
+# Ignore temporary files
+tmp/
+temp/
+*.tmp
+
+# Ignore target directories (but we need to be careful with this)
+# We'll exclude this for now since we need the target directory for caching
+
+# Ignore node_modules (if any)
+node_modules/
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Ignore documentation files that aren't needed for building
+*.md
+DOCS/
+docs/
+
+# Ignore test files that aren't needed for production
+*.test.rs
+tests/
+
+# Ignore examples that aren't needed for production
+examples/
+
+# Ignore benches that aren't needed for production
+benches/
+
+# Ignore backup files
+*.bak
+*.backup
+
+# Ignore environment files
+.env
+.env.local
+.env.*.local
+
+# Ignore Docker related files (but not this one)
+docker-compose*.yml
+Dockerfile.*
+!.dockerignore
+
+# Ignore contracts that use edition 2024 to avoid build issues
+contracts/cw-factory/
+contracts/cw-router/
+contracts/cw-fee-treasury/
+contracts/cw-lp-token/
+contracts/cw-stake/
+contracts/cw-gov/
+
+# Ignore libraries that use edition 2024 to avoid build issues
+libs/dex-oracle/
+libs/dex-sdk-rs/
+
+# Ignore development artifacts
+target/
+**/target/
+.git/
+**/*.md
+*.log
+*.lock
+*.tmp
+*.swp
+*.swo
+.env
+.DS_Store
+Thumbs.db
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

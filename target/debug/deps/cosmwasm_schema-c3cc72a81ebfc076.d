@@ -1,0 +1,11 @@
+/mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/deps/cosmwasm_schema-c3cc72a81ebfc076.d: /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/lib.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/casing.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/export.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/idl.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/query_response.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/remove.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/schema_for.rs
+
+/mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/deps/libcosmwasm_schema-c3cc72a81ebfc076.rmeta: /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/lib.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/casing.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/export.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/idl.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/query_response.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/remove.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/schema_for.rs
+
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/lib.rs:
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/casing.rs:
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/export.rs:
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/idl.rs:
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/query_response.rs:
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/remove.rs:
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cosmwasm-schema-2.2.2/src/schema_for.rs:

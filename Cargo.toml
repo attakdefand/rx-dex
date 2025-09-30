@@ -1,0 +1,68 @@
+[workspace]
+members = [
+  "contracts/cw-factory",
+  "contracts/cw-amm-cpmm",
+  "contracts/cw-router",
+  "contracts/cw-fee-treasury",
+  "contracts/cw-lp-token",
+  "contracts/cw-stake",
+  "contracts/cw-gov",
+  "libs/dex-primitives",
+  "libs/dex-math",
+  "libs/dex-oracle",
+  "libs/dex-sdk-rs",
+  "libs/dex-messaging",
+  "services/indexer",
+  "services/quoter",
+  "services/api-gateway",
+  "services/order-service",
+  "services/user-service",
+  "services/matching-engine",
+  "services/wallet-service",
+  "services/notification-service",
+  "services/admin-service",
+  "clients/web",
+]
+resolver = "2"
+
+[profile.dev]
+opt-level       = 0
+incremental     = true
+codegen-units   = 256
+debug           = 1           # Keep minimal debug info
+lto             = false
+panic           = "abort"
+overflow-checks = false
+strip           = "debuginfo"
+
+# Optimize dependencies but not your code (this is the key addition)
+[profile.dev.package."*"]
+opt-level = 3
+debug = false
+
+[profile.dev.build-override]
+opt-level = 3
+
+# ---------------------------------------------------------------------
+# Fast *rebuilds* while still shipping optimised code
+# ---------------------------------------------------------------------
+[profile.release]
+opt-level       = 3
+incremental     = true        # You have this - good for faster rebuilds
+codegen-units   = 16
+lto             = "thin"
+strip           = "symbols"
+
+[profile.release.package."*"]
+opt-level     = 1
+codegen-units = 256
+
+# ---------------------------------------------------------------------
+# Optional: Fast release for development testing
+# ---------------------------------------------------------------------
+[profile.release-dev]
+inherits = "release"
+opt-level = 2
+debug = true
+lto = false
+codegen-units = 32

@@ -1,0 +1,13 @@
+[package]
+name = "dex-messaging"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+tokio = { version = "1", features = ["sync"] }
+# For actual implementation, you would integrate with:
+# - async-nats = "0.33" for NATS
+# - rdkafka = "0.36" for Kafka
+# - redis = "0.24" for Redis Streams

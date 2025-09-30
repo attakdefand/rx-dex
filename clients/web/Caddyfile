@@ -1,0 +1,6 @@
+:8082 {
+    root * /usr/share/caddy
+    encode gzip
+    file_server
+    try_files {path} /index.html
+}
