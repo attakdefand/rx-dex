@@ -11,7 +11,7 @@ serde_json = "1"
 dex-math = { path = "../../libs/dex-math" }
 dex-messaging = { path = "../../libs/dex-messaging" }
 dex-primitives = { path = "../../libs/dex-primitives" }
-dex-data-structures = { path = "../../libs/dex-data-structures" }
+# dex-data-structures = { path = "../../libs/dex-data-structures" } # Commented out due to missing dependency
 uuid = { version = "1", features = ["v4"] }
 chrono = { version = "0.4", features = ["serde"] }
 lazy_static = "1.4"
