@@ -1,0 +1,10 @@
+/mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/deps/deadpool_postgres-1fe3115b49b975f8.d: /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/lib.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/config.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/generic_client.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/../README.md
+
+/mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/deps/libdeadpool_postgres-1fe3115b49b975f8.rlib: /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/lib.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/config.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/generic_client.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/../README.md
+
+/mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/deps/libdeadpool_postgres-1fe3115b49b975f8.rmeta: /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/lib.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/config.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/generic_client.rs /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/../README.md
+
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/lib.rs:
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/config.rs:
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/generic_client.rs:
+/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/deadpool-postgres-0.14.1/src/../README.md:
