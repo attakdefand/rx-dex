@@ -144,6 +144,13 @@ For production deployment on your Xeon server with the domain name toklo.xyz:
 3. Use the [DAILY-OPERATIONS-GUIDE.md](DAILY-OPERATIONS-GUIDE.md) for ongoing maintenance
 4. Run the setup script: `sudo ./scripts/setup-prod.sh` (Linux) or `.\scripts\setup-prod.ps1` (Windows)
 
+### Xeon Server Simulation in WSL
+
+To simulate your Xeon server deployment in WSL for testing:
+
+1. Run the Xeon simulation setup: `./scripts/setup-xeon-wsl.sh` (WSL) or `.\scripts\setup-xeon-wsl.ps1` (Windows)
+2. Start services with: `./scripts/daily-prod.sh start`
+
 ### WSL Setup (Kali Linux)
 
 For users who prefer to develop in WSL with Kali Linux:
