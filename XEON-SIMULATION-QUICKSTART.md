@@ -98,13 +98,13 @@ Once running, you can access your RX-DEX simulation at:
 ### Starting Services (Cargo-based)
 
 ```bash
-./scripts/daily-dev-wsl.sh
+./scripts/run-rxdex-wsl-dev.sh start
 ```
 
 ### Stopping Services (Cargo-based)
 
 ```bash
-./scripts/stop-daily-dev-wsl.sh
+./scripts/stop-rxdex-wsl-dev.sh
 ```
 
 ### Starting Services (Docker-based)
@@ -122,13 +122,25 @@ docker-compose -f docker-compose.wsl.yml down
 ### Viewing Logs (Cargo-based)
 
 ```bash
-tail -f /tmp/*.log
+./scripts/run-rxdex-wsl-dev.sh logs
 ```
 
 ### Viewing Logs (Docker-based)
 
 ```bash
 docker-compose -f docker-compose.wsl.yml logs -f
+```
+
+### Checking Service Status (Cargo-based)
+
+```bash
+./scripts/run-rxdex-wsl-dev.sh status
+```
+
+### Checking Service Status (Docker-based)
+
+```bash
+docker-compose -f docker-compose.wsl.yml ps
 ```
 
 ## Windows PowerShell Alternative

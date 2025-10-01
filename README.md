@@ -149,7 +149,7 @@ For production deployment on your Xeon server with the domain name toklo.xyz:
 To simulate your Xeon server deployment in WSL for testing:
 
 1. Run the Xeon simulation setup: `./scripts/setup-xeon-wsl.sh` (WSL) or `.\scripts\setup-xeon-wsl.ps1` (Windows)
-2. Start services with: `./scripts/daily-prod.sh start`
+2. Start services with: `./scripts/run-rxdex-wsl-dev.sh start` (development) or `docker-compose -f docker-compose.wsl.yml up` (Docker)
 
 ### WSL Setup (Kali Linux)
 
