@@ -139,7 +139,7 @@ For detailed instructions on running the complete DEX, see [COMPLETE-DEX-README.
 
 For production deployment on your Xeon server with the domain name toklo.xyz:
 
-1. Follow the [PRODUCTION-HOSTING-GUIDE.md](PRODUCTION-HOSTING-GUIDE.md) for complete setup instructions
+1. Follow the comprehensive [PRODUCTION-DEPLOYMENT-GUIDE.md](PRODUCTION-DEPLOYMENT-GUIDE.md) for step-by-step deployment instructions
 2. Configure your domain with GoDaddy using the [DOMAIN-CONFIGURATION-GUIDE.md](DOMAIN-CONFIGURATION-GUIDE.md)
 3. Use the [DAILY-OPERATIONS-GUIDE.md](DAILY-OPERATIONS-GUIDE.md) for ongoing maintenance
 4. Run the setup script: `sudo ./scripts/setup-prod.sh` (Linux) or `.\scripts\setup-prod.ps1` (Windows)
