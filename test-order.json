@@ -1,0 +1,8 @@
+{
+  "user_id": "user1",
+  "pair": "BTC/USDT",
+  "side": "buy",
+  "order_type": "limit",
+  "price": 50000,
+  "amount": 100
+}

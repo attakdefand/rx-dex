@@ -1,1 +1,0 @@
-/mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/libcw_stake.rlib: /mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/contracts/cw-stake/src/lib.rs

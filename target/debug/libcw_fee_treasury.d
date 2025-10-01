@@ -1,1 +1,0 @@
-/mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/target/debug/libcw_fee_treasury.rlib: /mnt/c/Users/RMT/Documents/vscodium/crypto-Exchange-Rust-Base/RX-DEX/rx-dex/contracts/cw-fee-treasury/src/lib.rs

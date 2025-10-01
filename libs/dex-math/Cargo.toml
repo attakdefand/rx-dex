@@ -1,8 +1,10 @@
 [package]
 name = "dex-math"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 
 [dependencies]
-rust_decimal = { version = "1", features = ["serde"] }
+rust_decimal = { version = "1", features = ["serde", "maths"] }
 thiserror = "1"
+
+[dev-dependencies]

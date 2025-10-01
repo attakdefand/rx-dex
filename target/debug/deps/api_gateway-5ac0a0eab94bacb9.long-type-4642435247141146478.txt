@@ -1,2 +1,0 @@
-fn(State<AppState>) -> impl Future<Output = Json<SimpleQuote>> {quote_simple}
-fn(State<AppState>) -> impl Future<Output = Json<SimpleQuote>> {quote_simple}: Handler<_, _>

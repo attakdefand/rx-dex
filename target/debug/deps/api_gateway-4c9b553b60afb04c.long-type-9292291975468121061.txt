@@ -1,2 +1,0 @@
-fn(axum::extract::State<AppState>) -> impl std::future::Future<Output = axum::Json<SimpleQuote>> {quote_simple}
-fn(axum::extract::State<AppState>) -> impl std::future::Future<Output = axum::Json<SimpleQuote>> {quote_simple}: axum::handler::Handler<_, _>

@@ -780,7 +780,7 @@ dependencies = [
 
 [[package]]
 name = "cw-amm-cpmm"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "cosmwasm-schema",
  "cosmwasm-std 2.2.2",
@@ -834,8 +834,33 @@ dependencies = [
 ]
 
 [[package]]
+name = "cw-oracle"
+version = "0.1.0"
+dependencies = [
+ "cosmwasm-schema",
+ "cosmwasm-std 2.2.2",
+ "cw-multi-test",
+ "cw-storage-plus",
+ "cw2",
+ "dex-oracle",
+ "schemars",
+ "serde",
+ "thiserror 1.0.69",
+]
+
+[[package]]
 name = "cw-router"
 version = "0.1.0"
+dependencies = [
+ "cosmwasm-schema",
+ "cosmwasm-std 2.2.2",
+ "cw-multi-test",
+ "cw-storage-plus",
+ "cw2",
+ "schemars",
+ "serde",
+ "thiserror 1.0.69",
+]
 
 [[package]]
 name = "cw-stake"
@@ -972,8 +997,17 @@ dependencies = [
 ]
 
 [[package]]
-name = "dex-math"
+name = "dex-data-structures"
 version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "uuid",
+]
+
+[[package]]
+name = "dex-math"
+version = "0.2.0"
 dependencies = [
  "rust_decimal",
  "thiserror 1.0.69",
@@ -989,7 +1023,10 @@ dependencies = [
 
 [[package]]
 name = "dex-oracle"
-version = "0.1.0"
+version = "0.2.0"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "dex-primitives"
@@ -1005,6 +1042,18 @@ dependencies = [
 [[package]]
 name = "dex-sdk-rs"
 version = "0.1.0"
+
+[[package]]
+name = "dex-security"
+version = "0.1.0"
+dependencies = [
+ "ed25519-dalek",
+ "hex",
+ "rand 0.8.5",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+]
 
 [[package]]
 name = "digest"
@@ -1067,6 +1116,20 @@ dependencies = [
  "pkcs8",
  "serde",
  "signature",
+]
+
+[[package]]
+name = "ed25519-dalek"
+version = "2.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "70e796c081cee67dc755e1a36a0a172b897fab85fc3f6bc48307991f64e4eca9"
+dependencies = [
+ "curve25519-dalek 4.1.3",
+ "ed25519",
+ "serde",
+ "sha2 0.10.9",
+ "subtle",
+ "zeroize",
 ]
 
 [[package]]
@@ -2304,13 +2367,15 @@ dependencies = [
 
 [[package]]
 name = "matching-engine"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "axum",
  "chrono",
+ "dex-data-structures",
  "dex-math",
  "dex-messaging",
  "dex-primitives",
+ "lazy_static",
  "serde",
  "serde_json",
  "tokio",
