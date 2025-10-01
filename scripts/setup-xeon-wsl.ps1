@@ -28,148 +28,56 @@ function Update-System {
     }
 }
 
-# Function to install Docker
-function Install-Docker {
-    Write-Host "Installing Docker..." -ForegroundColor Cyan
-    
-    # Check if Docker is already installed
-    try {
-        $dockerVersion = wsl docker --version
-        Write-Host "✅ Docker is already installed" -ForegroundColor Green
-        Write-Host $dockerVersion -ForegroundColor Gray
-        Write-Host ""
-        return
-    } catch {
-        # Docker not installed, continue with installation
-    }
+# Function to install required packages
+function Install-Packages {
+    Write-Host "Installing required packages..." -ForegroundColor Cyan
     
     try {
         # Install prerequisites
-        wsl -u root apt install apt-transport-https ca-certificates curl software-properties-common -y
+        wsl sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
         
-        # Add Docker's official GPG key
-        wsl curl -fsSL https://download.docker.com/linux/ubuntu/gpg | wsl -u root apt-key add -
+        # Install monitoring tools
+        wsl sudo apt install htop iotop iftop -y
         
-        # Add Docker repository
-        wsl -u root add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(wsl lsb_release -cs) stable"
-        
-        # Update package index
-        wsl -u root apt update
-        
-        # Install Docker
-        wsl -u root apt install docker-ce -y
-        
-        # Start and enable Docker
-        wsl -u root service docker start
-        
-        # Add current user to docker group
-        wsl -u root usermod -aG docker $env:USER
-        
-        Write-Host "✅ Docker installed" -ForegroundColor Green
+        Write-Host "✅ Required packages installed" -ForegroundColor Green
         Write-Host ""
     } catch {
-        Write-Host "❌ Failed to install Docker" -ForegroundColor Red
+        Write-Host "❌ Failed to install required packages" -ForegroundColor Red
         exit 1
     }
 }
 
-# Function to install Docker Compose
-function Install-DockerCompose {
-    Write-Host "Installing Docker Compose..." -ForegroundColor Cyan
-    
-    # Check if Docker Compose is already installed
-    try {
-        $composeVersion = wsl docker-compose --version
-        Write-Host "✅ Docker Compose is already installed" -ForegroundColor Green
-        Write-Host $composeVersion -ForegroundColor Gray
-        Write-Host ""
-        return
-    } catch {
-        # Docker Compose not installed, continue with installation
-    }
+# Function to configure Docker Desktop integration
+function Configure-DockerDesktop {
+    Write-Host "Configuring Docker Desktop integration..." -ForegroundColor Cyan
     
     try {
-        # Install Docker Compose
-        wsl -u root curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(wsl uname -s)-$(wsl uname -m)" -o /usr/local/bin/docker-compose
-        wsl -u root chmod +x /usr/local/bin/docker-compose
+        # Create Docker config directory
+        wsl mkdir -p ~/.docker
         
-        Write-Host "✅ Docker Compose installed" -ForegroundColor Green
-        Write-Host ""
-    } catch {
-        Write-Host "❌ Failed to install Docker Compose" -ForegroundColor Red
-        exit 1
-    }
+        # Configure Docker CLI to connect to Docker Desktop
+        @"
+{
+    "experimental": "enabled",
+    "stackOrchestrator": "swarm"
 }
-
-# Function to install Nginx
-function Install-Nginx {
-    Write-Host "Installing Nginx..." -ForegroundColor Cyan
-    
-    # Check if Nginx is already installed
-    try {
-        $nginxVersion = wsl nginx -v 2>&1
-        Write-Host "✅ Nginx is already installed" -ForegroundColor Green
-        Write-Host $nginxVersion -ForegroundColor Gray
-        Write-Host ""
-        return
-    } catch {
-        # Nginx not installed, continue with installation
-    }
-    
-    try {
-        wsl -u root apt install nginx -y
-        Write-Host "✅ Nginx installed" -ForegroundColor Green
-        Write-Host ""
-    } catch {
-        Write-Host "❌ Failed to install Nginx" -ForegroundColor Red
-        exit 1
-    }
-}
-
-# Function to install Certbot
-function Install-Certbot {
-    Write-Host "Installing Certbot..." -ForegroundColor Cyan
-    
-    # Check if Certbot is already installed
-    try {
-        $certbotVersion = wsl certbot --version
-        Write-Host "✅ Certbot is already installed" -ForegroundColor Green
-        Write-Host $certbotVersion -ForegroundColor Gray
-        Write-Host ""
-        return
-    } catch {
-        # Certbot not installed, continue with installation
-    }
-    
-    try {
-        wsl -u root apt install certbot python3-certbot-nginx -y
-        Write-Host "✅ Certbot installed" -ForegroundColor Green
-        Write-Host ""
-    } catch {
-        Write-Host "❌ Failed to install Certbot" -ForegroundColor Red
-        exit 1
-    }
-}
-
-# Function to setup firewall
-function Setup-Firewall {
-    Write-Host "Setting up firewall..." -ForegroundColor Cyan
-    
-    try {
-        # Check if UFW is installed
-        wsl -u root apt install ufw -y
+"@ | wsl tee ~/.docker/config.json > $null
         
-        # Configure firewall rules
-        wsl -u root ufw --force enable
-        wsl -u root ufw default deny incoming
-        wsl -u root ufw default allow outgoing
-        wsl -u root ufw allow ssh
-        wsl -u root ufw allow 'Nginx Full'
-        
-        Write-Host "✅ Firewall configured" -ForegroundColor Green
-        Write-Host ""
+        # Test Docker connection
+        $dockerTest = wsl docker version 2>$null
+        if (-not $dockerTest) {
+            Write-Host "⚠️  Docker is not accessible from WSL" -ForegroundColor Yellow
+            Write-Host "   Please ensure Docker Desktop is installed and running on Windows" -ForegroundColor Yellow
+            Write-Host "   Also make sure WSL integration is enabled in Docker Desktop settings" -ForegroundColor Yellow
+            Write-Host "   Visit: https://docs.docker.com/go/wsl2/ for more details" -ForegroundColor Yellow
+            Write-Host ""
+        } else {
+            Write-Host "✅ Docker Desktop integration configured" -ForegroundColor Green
+            wsl docker version
+            Write-Host ""
+        }
     } catch {
-        Write-Host "❌ Failed to configure firewall" -ForegroundColor Red
+        Write-Host "❌ Failed to configure Docker Desktop integration" -ForegroundColor Red
         exit 1
     }
 }
@@ -237,25 +145,51 @@ RUST_LOG=info
     }
 }
 
-# Function to build Docker images
+# Function to build Docker images (using Docker Desktop)
 function Build-DockerImages {
-    Write-Host "Building Docker images..." -ForegroundColor Cyan
+    Write-Host "Building Docker images with Docker Desktop..." -ForegroundColor Cyan
     
     try {
-        # Check if Docker daemon is running
-        $dockerStatus = wsl -u root service docker status 2>$null
-        if (-not $dockerStatus.Contains("running")) {
-            Write-Host "Starting Docker daemon..." -ForegroundColor Cyan
-            wsl -u root service docker start
+        # Check if Docker is accessible
+        $dockerTest = wsl docker version 2>$null
+        if (-not $dockerTest) {
+            Write-Host "⚠️  Docker is not accessible from WSL" -ForegroundColor Yellow
+            Write-Host "   Please ensure Docker Desktop is installed and running on Windows" -ForegroundColor Yellow
+            Write-Host "   Also make sure WSL integration is enabled in Docker Desktop settings" -ForegroundColor Yellow
+            Write-Host "   Visit: https://docs.docker.com/go/wsl2/ for more details" -ForegroundColor Yellow
+            Write-Host ""
+            Write-Host "Skipping Docker image build. You can build images later with:" -ForegroundColor Yellow
+            Write-Host "   docker-compose -f docker-compose.wsl.yml build" -ForegroundColor Yellow
+            Write-Host ""
+            return
         }
         
-        # Build images
-        wsl docker-compose -f docker-compose.prod.yml build
+        # Build images using the WSL-specific docker-compose file
+        Write-Host "Building Docker images using docker-compose.wsl.yml..." -ForegroundColor Cyan
+        wsl docker-compose -f docker-compose.wsl.yml build
         
         Write-Host "✅ Docker images built successfully" -ForegroundColor Green
         Write-Host ""
     } catch {
         Write-Host "❌ Failed to build Docker images" -ForegroundColor Red
+        Write-Host "   You can try building images later with: docker-compose -f docker-compose.wsl.yml build" -ForegroundColor Yellow
+        Write-Host ""
+    }
+}
+
+# Function to make scripts executable
+function Make-ScriptsExecutable {
+    Write-Host "Making scripts executable..." -ForegroundColor Cyan
+    
+    try {
+        Get-ChildItem -Path "./scripts" -Filter "*.sh" | ForEach-Object {
+            wsl chmod +x $_.FullName
+        }
+        
+        Write-Host "✅ Scripts made executable" -ForegroundColor Green
+        Write-Host ""
+    } catch {
+        Write-Host "❌ Failed to make scripts executable" -ForegroundColor Red
         exit 1
     }
 }
@@ -269,9 +203,11 @@ function Show-Completion {
     Write-Host "Your WSL environment is now configured to simulate a Xeon server deployment." -ForegroundColor White
     Write-Host ""
     Write-Host "Next steps:" -ForegroundColor White
-    Write-Host "1. Log out and log back in to apply Docker group membership" -ForegroundColor White
-    Write-Host "2. Start services with: ./scripts/daily-prod.sh start" -ForegroundColor White
-    Write-Host "3. Check service status with: ./scripts/daily-prod.sh status" -ForegroundColor White
+    Write-Host "1. Ensure Docker Desktop is installed and running on Windows" -ForegroundColor White
+    Write-Host "2. Enable WSL integration in Docker Desktop settings" -ForegroundColor White
+    Write-Host "3. Start services with: ./scripts/daily-dev-wsl.sh" -ForegroundColor White
+    Write-Host "4. In another terminal, start the web frontend: cd clients/web && trunk serve --port 8082" -ForegroundColor White
+    Write-Host "5. Check service status with: ./scripts/daily-health-check-wsl.sh" -ForegroundColor White
     Write-Host ""
     Write-Host "For production deployment on your actual Xeon server, follow the" -ForegroundColor White
     Write-Host "PRODUCTION-DEPLOYMENT-GUIDE.md file." -ForegroundColor White
@@ -285,14 +221,13 @@ function Show-Help {
     Write-Host "Usage: .\scripts\setup-xeon-wsl.ps1 [option]" -ForegroundColor White
     Write-Host ""
     Write-Host "Options:" -ForegroundColor White
-    Write-Host "  all       - Run complete setup (default)" -ForegroundColor White
-    Write-Host "  docker    - Install only Docker and Docker Compose" -ForegroundColor White
-    Write-Host "  nginx     - Install only Nginx" -ForegroundColor White
-    Write-Host "  certbot   - Install only Certbot" -ForegroundColor White
-    Write-Host "  firewall  - Configure only firewall" -ForegroundColor White
-    Write-Host "  env       - Create only environment file" -ForegroundColor White
-    Write-Host "  build     - Build Docker images" -ForegroundColor White
-    Write-Host "  help      - Show this help message" -ForegroundColor White
+    Write-Host "  all           - Run complete setup (default)" -ForegroundColor White
+    Write-Host "  docker        - Install Docker and configure Docker Desktop integration" -ForegroundColor White
+    Write-Host "  packages      - Install required packages" -ForegroundColor White
+    Write-Host "  docker-config - Configure Docker Desktop integration" -ForegroundColor White
+    Write-Host "  env           - Create only environment file" -ForegroundColor White
+    Write-Host "  build         - Build Docker images" -ForegroundColor White
+    Write-Host "  help          - Show this help message" -ForegroundColor White
     Write-Host ""
     Write-Host "Examples:" -ForegroundColor White
     Write-Host "  .\scripts\setup-xeon-wsl.ps1" -ForegroundColor White
@@ -310,17 +245,14 @@ function Main {
     switch ($Option) {
         "docker" {
             Update-System
-            Install-Docker
-            Install-DockerCompose
+            Install-Packages
+            Configure-DockerDesktop
         }
-        "nginx" {
-            Install-Nginx
+        "packages" {
+            Install-Packages
         }
-        "certbot" {
-            Install-Certbot
-        }
-        "firewall" {
-            Setup-Firewall
+        "docker-config" {
+            Configure-DockerDesktop
         }
         "env" {
             Create-EnvFile
@@ -333,13 +265,11 @@ function Main {
         }
         {($_ -eq "") -or ($_ -eq "all")} {
             Update-System
-            Install-Docker
-            Install-DockerCompose
-            Install-Nginx
-            Install-Certbot
-            Setup-Firewall
+            Install-Packages
+            Configure-DockerDesktop
             Create-LogDirectory
             Create-EnvFile
+            Make-ScriptsExecutable
             Build-DockerImages
             Show-Completion
         }

@@ -28,137 +28,52 @@ update_system() {
     echo ""
 }
 
-# Function to install Docker
-install_docker() {
-    echo "Installing Docker..."
-    
-    # Check if Docker is already installed
-    if command -v docker &> /dev/null; then
-        echo "✅ Docker is already installed"
-        docker --version
-        echo ""
-        return
-    fi
+# Function to install required packages
+install_packages() {
+    echo "Installing required packages..."
     
     # Install prerequisites
     sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
     
-    # Add Docker's official GPG key
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-    
-    # Add Docker repository
-    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-    
-    # Update package index
-    sudo apt update
-    
-    # Install Docker
-    sudo apt install docker-ce -y
-    
-    # Start and enable Docker
-    sudo service docker start
-    
-    # Add current user to docker group
-    sudo usermod -aG docker $USER
+    # Install monitoring tools
+    sudo apt install htop iotop iftop -y
     
     if [[ $? -ne 0 ]]; then
-        echo "❌ Failed to install Docker"
+        echo "❌ Failed to install required packages"
         exit 1
     fi
     
-    echo "✅ Docker installed"
+    echo "✅ Required packages installed"
     echo ""
 }
 
-# Function to install Docker Compose
-install_docker_compose() {
-    echo "Installing Docker Compose..."
+# Function to configure Docker Desktop integration
+configure_docker_desktop() {
+    echo "Configuring Docker Desktop integration..."
     
-    # Check if Docker Compose is already installed
-    if command -v docker-compose &> /dev/null; then
-        echo "✅ Docker Compose is already installed"
-        docker-compose --version
+    # Create Docker config directory
+    mkdir -p ~/.docker
+    
+    # Configure Docker CLI to connect to Docker Desktop
+    cat > ~/.docker/config.json << EOF
+{
+    "experimental": "enabled",
+    "stackOrchestrator": "swarm"
+}
+EOF
+    
+    # Test Docker connection
+    if ! docker version >/dev/null 2>&1; then
+        echo "⚠️  Docker is not accessible from WSL"
+        echo "   Please ensure Docker Desktop is installed and running on Windows"
+        echo "   Also make sure WSL integration is enabled in Docker Desktop settings"
+        echo "   Visit: https://docs.docker.com/go/wsl2/ for more details"
         echo ""
-        return
-    fi
-    
-    # Install Docker Compose
-    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
-    
-    if [[ $? -ne 0 ]]; then
-        echo "❌ Failed to install Docker Compose"
-        exit 1
-    fi
-    
-    echo "✅ Docker Compose installed"
-    echo ""
-}
-
-# Function to install Nginx
-install_nginx() {
-    echo "Installing Nginx..."
-    
-    # Check if Nginx is already installed
-    if command -v nginx &> /dev/null; then
-        echo "✅ Nginx is already installed"
-        nginx -v
+    else
+        echo "✅ Docker Desktop integration configured"
+        docker version
         echo ""
-        return
     fi
-    
-    sudo apt install nginx -y
-    
-    if [[ $? -ne 0 ]]; then
-        echo "❌ Failed to install Nginx"
-        exit 1
-    fi
-    
-    echo "✅ Nginx installed"
-    echo ""
-}
-
-# Function to install Certbot
-install_certbot() {
-    echo "Installing Certbot..."
-    
-    # Check if Certbot is already installed
-    if command -v certbot &> /dev/null; then
-        echo "✅ Certbot is already installed"
-        certbot --version
-        echo ""
-        return
-    fi
-    
-    sudo apt install certbot python3-certbot-nginx -y
-    
-    if [[ $? -ne 0 ]]; then
-        echo "❌ Failed to install Certbot"
-        exit 1
-    fi
-    
-    echo "✅ Certbot installed"
-    echo ""
-}
-
-# Function to setup firewall
-setup_firewall() {
-    echo "Setting up firewall..."
-    
-    # Check if UFW is installed
-    if ! command -v ufw &> /dev/null; then
-        sudo apt install ufw -y
-    fi
-    
-    # Configure firewall rules
-    echo "y" | sudo ufw enable >/dev/null 2>&1
-    sudo ufw default deny incoming
-    sudo ufw default allow outgoing
-    sudo ufw allow ssh
-    sudo ufw allow 'Nginx Full'
-    
-    echo "✅ Firewall configured"
-    echo ""
 }
 
 # Function to create log directory
@@ -210,25 +125,45 @@ EOF
     echo ""
 }
 
-# Function to build Docker images
+# Function to build Docker images (using Docker Desktop)
 build_docker_images() {
-    echo "Building Docker images..."
+    echo "Building Docker images with Docker Desktop..."
     
-    # Check if Docker daemon is running
-    if ! sudo service docker status >/dev/null 2>&1; then
-        echo "Starting Docker daemon..."
-        sudo service docker start
+    # Check if Docker is accessible
+    if ! docker version >/dev/null 2>&1; then
+        echo "⚠️  Docker is not accessible from WSL"
+        echo "   Please ensure Docker Desktop is installed and running on Windows"
+        echo "   Also make sure WSL integration is enabled in Docker Desktop settings"
+        echo "   Visit: https://docs.docker.com/go/wsl2/ for more details"
+        echo ""
+        echo "Skipping Docker image build. You can build images later with:"
+        echo "   docker-compose -f docker-compose.wsl.yml build"
+        echo ""
+        return
     fi
     
-    # Build images
-    docker-compose -f docker-compose.prod.yml build
+    # Build images using the WSL-specific docker-compose file
+    echo "Building Docker images using docker-compose.wsl.yml..."
+    docker-compose -f docker-compose.wsl.yml build
     
     if [[ $? -ne 0 ]]; then
         echo "❌ Failed to build Docker images"
-        exit 1
+        echo "   You can try building images later with: docker-compose -f docker-compose.wsl.yml build"
+        echo ""
+    else
+        echo "✅ Docker images built successfully"
+        echo ""
     fi
+}
+
+# Function to make scripts executable
+make_scripts_executable() {
+    echo "Making scripts executable..."
     
-    echo "✅ Docker images built successfully"
+    # Make all shell scripts in the scripts directory executable
+    find scripts -name "*.sh" -exec chmod +x {} \; 2>/dev/null || true
+    
+    echo "✅ Scripts made executable"
     echo ""
 }
 
@@ -241,9 +176,11 @@ show_completion() {
     echo "Your WSL environment is now configured to simulate a Xeon server deployment."
     echo ""
     echo "Next steps:"
-    echo "1. Log out and log back in to apply Docker group membership"
-    echo "2. Start services with: ./scripts/daily-prod.sh start"
-    echo "3. Check service status with: ./scripts/daily-prod.sh status"
+    echo "1. Ensure Docker Desktop is installed and running on Windows"
+    echo "2. Enable WSL integration in Docker Desktop settings"
+    echo "3. Start services with: ./scripts/daily-dev-wsl.sh"
+    echo "4. In another terminal, start the web frontend: cd clients/web && trunk serve --port 8082"
+    echo "5. Check service status with: ./scripts/daily-health-check-wsl.sh"
     echo ""
     echo "For production deployment on your actual Xeon server, follow the"
     echo "PRODUCTION-DEPLOYMENT-GUIDE.md file."
@@ -278,17 +215,14 @@ main() {
     case "$1" in
         docker)
             update_system
-            install_docker
-            install_docker_compose
+            install_packages
+            configure_docker_desktop
             ;;
-        nginx)
-            install_nginx
+        packages)
+            install_packages
             ;;
-        certbot)
-            install_certbot
-            ;;
-        firewall)
-            setup_firewall
+        docker-config)
+            configure_docker_desktop
             ;;
         env)
             create_env_file
@@ -301,13 +235,11 @@ main() {
             ;;
         ""|all)
             update_system
-            install_docker
-            install_docker_compose
-            install_nginx
-            install_certbot
-            setup_firewall
+            install_packages
+            configure_docker_desktop
             create_log_directory
             create_env_file
+            make_scripts_executable
             build_docker_images
             show_completion
             ;;
